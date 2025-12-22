@@ -20,7 +20,7 @@ module.exports = {
         },
         env_production: {
           NODE_ENV: "production",
-          API_URL: "http://13.53.36.41:3300/message"
+          API_URL: "your ip address"
         }
       },
       {
@@ -35,7 +35,7 @@ module.exports = {
         user: "node",
         host: "212.83.163.1",
         ref: "origin/main",
-        repo: "git@github.com:krishtopiwala/ubuntu_cicd.git",
+        repo: "yorur github repo",
         path: "/var/www/express-app",
         "post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
       }
