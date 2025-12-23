@@ -62,15 +62,15 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
         run: |
           # Create SSH key file
-          echo "$SSH_PRIVATE_KEY" > aws_krish_pem.pem
-          chmod 600 aws_krish_pem.pem
+          echo "$SSH_PRIVATE_KEY" > ci-cd.pem
+          chmod 600 ci-cd.pem
 
           # Copy deployment package to EC2
-          scp -i aws_krish_pem.pem -o StrictHostKeyChecking=no \
+          scp -i ci-cd.pem -o StrictHostKeyChecking=no \
             deploy.tar.gz ${EC2_USERNAME}@${EC2_HOST}:/tmp/
 
           # SSH into EC2 and deploy
-          ssh -i aws_krish_pem.pem -o StrictHostKeyChecking=no \
+          ssh -i ci-cd.pem -o StrictHostKeyChecking=no \
             ${EC2_USERNAME}@${EC2_HOST} << 'EOF'
             
             # Navigate to app directory
@@ -129,7 +129,7 @@ jobs:
           EOF
 
           # Cleanup
-          rm aws_krish_pem.pem
+          rm ci-cd.pem
 
       - name: Verify deployment
         env:
@@ -165,10 +165,10 @@ jobs:
         run: |
           echo "🔄 Attempting to rollback to previous version..."
 
-          echo "$SSH_PRIVATE_KEY" > aws_krish_pem.pem
-          chmod 600 aws_krish_pem.pem
+          echo "$SSH_PRIVATE_KEY" > ci-cd.pem
+          chmod 600 ci-cd.pem
 
-          ssh -i aws_krish_pem.pem -o StrictHostKeyChecking=no \
+          ssh -i ci-cd.pem -o StrictHostKeyChecking=no \
             ${EC2_USERNAME}@${EC2_HOST} << 'EOF'
             
             cd /var/www/express-app
@@ -190,4 +190,4 @@ jobs:
             fi
           EOF
 
-          rm aws_krish_pem.pem
+          rm ci-cd.pem
