@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.13.1"
+          node-version: "24.12.0"
           cache: "npm"
 
       - name: Install dependencies
@@ -108,7 +108,7 @@ jobs:
             if [ ! -f .env ]; then
               echo "Creating default .env file..."
               echo "NODE_ENV=production" > .env
-              echo "PORT=8000" >> .env
+              echo "PORT=3301" >> .env
             fi
             
             # Create logs directory
