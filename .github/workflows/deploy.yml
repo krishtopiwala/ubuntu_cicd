@@ -62,15 +62,15 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
         run: |
           # Create SSH key file
-          echo "$SSH_PRIVATE_KEY" > ci-cd.pem
-          chmod 600 ci-cd.pem
+          echo "$SSH_PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
 
           # Copy deployment package to EC2
-          scp -i ci-cd.pem -o StrictHostKeyChecking=no \
+          scp -i private_key.pem -o StrictHostKeyChecking=no \
             deploy.tar.gz ${EC2_USERNAME}@${EC2_HOST}:/tmp/
 
           # SSH into EC2 and deploy
-          ssh -i ci-cd.pem -o StrictHostKeyChecking=no \
+          ssh -i private_key.pem -o StrictHostKeyChecking=no \
             ${EC2_USERNAME}@${EC2_HOST} << 'EOF'
             
             # Navigate to app directory
@@ -129,7 +129,7 @@ jobs:
           EOF
 
           # Cleanup
-          rm ci-cd.pem
+          rm private_key.pem
 
       - name: Verify deployment
         env:
@@ -165,10 +165,10 @@ jobs:
         run: |
           echo "🔄 Attempting to rollback to previous version..."
 
-          echo "$SSH_PRIVATE_KEY" > ci-cd.pem
-          chmod 600 ci-cd.pem
+          echo "$SSH_PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
 
-          ssh -i ci-cd.pem -o StrictHostKeyChecking=no \
+          ssh -i private_key.pem -o StrictHostKeyChecking=no \
             ${EC2_USERNAME}@${EC2_HOST} << 'EOF'
             
             cd /var/www/express-app
@@ -190,4 +190,4 @@ jobs:
             fi
           EOF
 
-          rm ci-cd.pem
+          rm private_key.pem
