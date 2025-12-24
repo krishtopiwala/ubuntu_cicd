@@ -1,8 +1,10 @@
 name: Deploy to EC2
+
 on:
   push:
     branches: [main]
-  workflow_dispatch: # Remove 'branches' - this is incorrect syntax
+  workflow_dispatch: # manual trigger
+
 jobs:
   build:
     name: Build Application
