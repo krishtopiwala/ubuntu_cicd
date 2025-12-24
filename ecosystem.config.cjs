@@ -14,7 +14,7 @@ module.exports = {
         instances: "max", // Can be 'max' to use all CPU cores in cluster mode
         autorestart: true,
         watch: false, // Set to true to watch file changes and restart
-        max_memory_restart: "1M", // Restart app if it exceeds 1GB of memory
+        max_memory_restart: "100M", // Restart app if it exceeds 1GB of memory
         env: {
           NODE_ENV: "development"
         },
