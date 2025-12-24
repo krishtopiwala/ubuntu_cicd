@@ -20,7 +20,7 @@ module.exports = {
         },
         env_production: {
           NODE_ENV: "production",
-          API_URL: "your ip address"
+          API_URL: "13.53.36.41:3300/message"
         }
       },
       {
